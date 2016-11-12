@@ -3,7 +3,7 @@ import json
 from core.insight_api import *
 from django import forms
 from django.contrib import auth
-rom django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 
 class SearchOutput(forms.Form):
