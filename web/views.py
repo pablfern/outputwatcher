@@ -16,6 +16,9 @@ def home(request):
 
 
 def login(request):
+    if request.user.is_authenticated():
+        return redirect('following-outputs')
+        
     login_form = LoginForm(request.POST or None)
     if login_form.is_valid():
         login_form.process(request)
