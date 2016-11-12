@@ -27,6 +27,8 @@ def register(request):
 
 @login_required
 def following_outputs(request):
+    request.session.pop('txid', None)
+    request.session.pop('network', None)
     following_outputs = FollowingOutputs.objects.filter(user=request.user).order_by('-creation_date')
     return render(request, 'web/outputs/following_outputs.html', {'following_outputs': following_outputs,})
 
