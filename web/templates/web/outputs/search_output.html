@@ -15,11 +15,5 @@
         {{ search_form }}
         <button type="submit" class="search-form btn btn-default" id="search">Buscar</button>
     </form>
-
-    <form action="{% url 'search-by-index' %}" method="post">
-        {% csrf_token %}
-        {{ search_index_form }}
-        <button type="submit" class="search-form btn btn-default" id="search">Buscar</button>
-    </form>
 {% endblock %}
 

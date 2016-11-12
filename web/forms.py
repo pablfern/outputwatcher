@@ -10,21 +10,11 @@ class SearchOutput(forms.Form):
     transaction = forms.CharField(label=u'ID de la transacción', max_length=100, required=True)
     network = forms.ChoiceField(label='Network', required=True, widget=forms.RadioSelect,
                                         choices=NETWORK)
-
-    def process(self):
-        return self.cleaned_data['transaction'], self.cleaned_data['network']
-
-
-class SearchOutputByTxIndexForm(forms.Form):
-    NETWORK = [('livenet', 'livenet'), ('testnet', 'testnet')]
-    transaction = forms.CharField(label=u'ID de la transacción', max_length=100, required=True)
-    index = forms.IntegerField(label=u'Indice', required=True)
-    network = forms.ChoiceField(label='Network', required=True, widget=forms.RadioSelect,
-                                choices=NETWORK)
+    index = forms.IntegerField(label=u'Indice', required=False)
 
     def clean_index(self):
         _index = self.cleaned_data['index']
-        if not _index or _index < 0:
+        if _index and _index < 0:
             raise forms.ValidationError(u'El índice ingresado debe ser mayor o igual a 0')
         return _index
 
