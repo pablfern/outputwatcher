@@ -7,6 +7,7 @@ from core.insight_api import get_outputs, get_output_by_index, OutputAlreadySpen
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
@@ -18,7 +19,7 @@ def home(request):
 def login(request):
     if request.user.is_authenticated():
         return redirect('following-outputs')
-        
+
     login_form = LoginForm(request.POST or None)
     if login_form.is_valid():
         login_form.process(request)
@@ -28,6 +29,12 @@ def login(request):
 
 def register(request):
     return render(request, 'web/account/register.html', {})
+
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
 
 
 @login_required

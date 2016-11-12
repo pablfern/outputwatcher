@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns(
     '',
     url(r'^$', 'web.views.home', name="home"),
+    url(r'^accounts/logout/$', 'web.views.logout', name="logout"),
     url(r'^accounts/login/$', 'web.views.login', name="login"),
     url(r'^accounts/register/$', 'web.views.register', name="register"),
 
