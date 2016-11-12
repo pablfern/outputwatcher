@@ -3,6 +3,7 @@ import json
 from core.insight_api import *
 from django import forms
 from django.contrib import auth
+rom django.contrib.auth.models import User
 
 
 class SearchOutput(forms.Form):
@@ -76,3 +77,42 @@ class LoginForm(forms.Form):
         auth.login(request, user)
 #        request.session['user_id'] = user.email
         return user
+
+
+class RegisterForm(forms.Form):
+
+    error_messages = {
+        'register_invalid': u"Usuario o contraseña inválidos",
+    }
+
+    email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={
+        'placeholder': 'Correo electrónico', 'class': 'form-control'}))
+    password = forms.CharField(
+        label="Contraseña", widget=forms.PasswordInput(
+            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}))
+    repassword = forms.CharField(
+        label="Repeti Contraseña", widget=forms.PasswordInput(
+            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}))
+
+    def clean(self):
+        username = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        repassword = self.cleaned_data.get('repassword')
+        # if username and password:
+        #     user = auth.authenticate(
+        #         username=username.lower(), password=password
+        #     )
+        #     if not user:
+        #         raise forms.ValidationError(
+        #             self.error_messages['register_invalid'])
+        # return self.cleaned_data
+
+    def process(self, request):
+        username = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+        repassword = self.cleaned_data.get('repassword')
+#         user = auth.authenticate(username=username.lower(), password=password)
+
+#         auth.login(request, user)
+# #        request.session['user_id'] = user.email
+#         return user
