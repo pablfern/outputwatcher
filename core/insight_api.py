@@ -23,7 +23,7 @@ def get_outputs(txid, network):
             for out in content['vout']:
                 if not out['spentTxId']:
                     aux = { 'value': out['value'],
-                            'address': out['scriptPubKey']['addresses'],
+                            #'address': out['scriptPubKey']['addresses'],
                             'index': out['n'],
                             }
                     outputs.append(aux)

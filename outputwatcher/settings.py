@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['localhost',]
 INSTALLED_APPS = (
     'core',
     'web',
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

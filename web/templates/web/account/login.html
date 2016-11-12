@@ -10,5 +10,10 @@
 
 {% block content %}
     <div>Ingresa!</div>
+    <form action="{% url 'login' %}" method="post">
+	    {% csrf_token %}
+	    {{ login_form }}
+	    <button type="submit" class="search-form btn btn-default" id="search">Ingresar</button>
+    </form>
 {% endblock %}
 

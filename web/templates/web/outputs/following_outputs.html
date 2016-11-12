@@ -1,0 +1,18 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}
+    Outputs en seguimiento
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <div>Estos son los outputs que estás siguiendo</div>
+    <a href="{% url 'search-output' %}">Buscar outputs!</a>
+    {% for following in following_outputs %}
+    	<div> {{ following.output.transaction }} - {{ following.output.index}} - {{ following.output.amount }} - {{ following.creation_date }}</div>
+    {% endfor %}
+{% endblock %}
+
