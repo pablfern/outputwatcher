@@ -9,11 +9,42 @@
 {% endblock %}
 
 {% block content %}
-    <div>Ingresa!</div>
-    <form action="{% url 'login' %}" method="post">
-	    {% csrf_token %}
-	    {{ login_form }}
-	    <button type="submit" class="search-form btn btn-default" id="search">Ingresar</button>
-    </form>
+    <header role="banner" id="fh5co-header">
+		<div class="fluid-container">
+			<nav class="navbar navbar-default">
+				<div class="navbar-header">
+					<!-- Mobile Toggle Menu Button -->
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+					<a class="navbar-brand" href="index.html">OutputWatcher</a> 
+				</div>
+			</nav>
+	  </div>
+	</header>
+
+	<div id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="col-md-5 col-md-offset-4 text-center">
+
+			<form class="contact-form" action="{% url 'login' %}" method="post">
+				{% csrf_token %}
+				<div class="form-group">
+					<label for="email" class="sr-only">Email</label>
+		        	{{ login_form.email }}
+		        </div>
+		        <div class="form-group">
+					<label for="password" class="sr-only">Password</label>
+		        	{{ login_form.password }}
+		        </div>
+        		<div class="form-group" style="display: none;">
+					<label for="email" class="sr-only">Email</label>
+					<input type="email" class="form-control" id="email" placeholder="Email">
+				</div>
+				<div class="form-group">
+					<button type="submit" id="btn-submit" class="btn btn-send-message btn-md" >Ingresar</button>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 

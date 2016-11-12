@@ -51,10 +51,10 @@ class LoginForm(forms.Form):
     }
 
     email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={
-        'placeholder': 'Correo electrónico'}))
+        'placeholder': 'Correo electrónico', 'class': 'form-control'}))
     password = forms.CharField(
         label="Contraseña", widget=forms.PasswordInput(
-            attrs={'placeholder': 'Contraseña'}))
+            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}))
 
     def clean(self):
         username = self.cleaned_data.get('email')
