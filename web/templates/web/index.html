@@ -9,66 +9,92 @@
 {% endblock %}
 
 {% block content %}
-	<header role="banner" id="fh5co-header">
-		<div class="fluid-container">
-			<nav class="navbar navbar-default">
-				<div class="navbar-header">
-					<!-- Mobile Toggle Menu Button -->
-					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-					<a class="navbar-brand" href="index.html">OutputWatcher</a> 
-				</div>
-				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="call-to-action"><a class="log-in" href="{% url 'logout' %}"><span>Cerrar Session</span></a></li>
-					</ul>
-				</div>
-			</nav>
-	  </div>
-	</header>
-
-	<section id="fh5co-home" data-section="home" style="background-image: url({% static 'web/images/full_image_3.jpg' %});" data-stellar-background-ratio="0.5">
-		<div class="gradient"></div>
-		<div class="container">
-			<div class="text-wrap">
-				<div class="text-inner">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 text-center">
-							<h1>Output watcher <i class="icon-eye"></i></h1>
-							<h2>Registra un webhook y enterate cuando un output es gastado</h2>
-							<div class="call-to-action">
-								<a href="{% url 'register' %}" class="demo">Registrate</a>
-								<a href="{% url 'login' %}" class="download">Ingresa</a>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<div id="fh5co-footer" role="contentinfo">
+	<header class="main_menu_sec navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-12">
+					<div class="lft_hd">
+						<div class="main_menu">
+							<nav id="nav_menu">
+								<div id="navbar">
+									<ul>
+										<h1 style="color: white;">Output watcher <i class="fa fa-eye"></i></h1>
+									</ul>
+								</div>		
+							</nav>			
+						</div>	
+					</div>
+				</div>			
+				<div class="col-lg-9 col-md-9 col-sm-12">
+					<div class="rgt_hd">					
+						<div class="main_menu">
+							<nav id="nav_menu">
+								<div id="navbar">
+									<ul>
+										<li class="page-scroll"><a href="{% url 'logout' %}">Cerrar Session</a></li>
+									</ul>
+								</div>		
+							</nav>			
+						</div>							
+					</div>
+				</div>	
+			</div>	
+		</div>	
+	</header>
+
+	<section id="slider_sec">
+		<div class="container">
+			<div class="row">
+				<div class="slider">
+					<div class="item active">
+						<div class="wrap_caption">
+						  <div class="caption_carousel">
+							<h1>Output watcher <i class="fa fa-eye"></i></h1>
+							<p>Registra un webhook y enterate cuando un output es gastado</p>
+							<div class="row" style="padding-top:30px">
+								<a href="{% url 'register' %}" class="btn btn-primary btn-lg demo" >Registrate</a>
+								<a href="{% url 'login' %}" class="btn btn-primary btn-lg download" >Ingresa</a>
+							</div>
+						  </div>						
+						</div>
+					</div>	
+				</div>
+			</div>	
+		</div>			
+	</section>
+	<!-- End slider Section -->
+	<section id="clt_sec">
+		<div class="container">	
+			<div class="row">
 				<div class="col-md-6">
-					<h3 class="section-title">About Us</h3>
+					<h3>About Us</h3>
 					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics.</p>
 				</div>
 
 				<div class="col-md-4">
-					<h3 class="section-title">Links</h3>
-					<ul class="contact-info">
+					<h3>Links</h3>
+					<ul>
 						<li><a href="https://bitcoin.org/es/">Bitcoin</a></li>
 						<li><a href="https://insight.is/">Insight</a></li>
 						<li><a href="https://github.com/bitpay/insight-api">Insight-API</a></li>		
 					</ul>
-				</div>
-			</div>
-			<div class="row">
-				<ul class="social-media">
-					<li><a href="https://github.com/pablfern/outputwatcher" class="github"><i class="icon-github-alt"></i></a></li>
-				</ul>			
+				</div>	
 			</div>
 		</div>
-	</div>
+	</section>
+	<!-- End Happy Client  Section -->
+	<footer id="ft_sec">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ft">						
+						<ul>
+							<li><a href="https://github.com/pablfern/outputwatcher"><i class="fa fa-github"></i></a></li>
+						</ul>					
+					</div>				
+				</div>	
+			</div>
+		</div>
+	</footer>
+	<!-- End footer Section -->
 {% endblock %}
