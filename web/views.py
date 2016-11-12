@@ -13,6 +13,8 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 
 def home(request):
+    if request.user.is_authenticated():
+        return redirect('following-outputs')
     return render(request, 'web/index.html', {})
 
 

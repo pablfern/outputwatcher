@@ -10,3 +10,4 @@ def send_email(output, index, transaction, to_emails, **kwargs):
                          to_emails, **kwargs)
     email.content_subtype = 'html'
     email.send()
+    
