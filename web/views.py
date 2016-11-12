@@ -1,4 +1,9 @@
-from web.forms import SearchOutput
+# -*- coding: utf-8 -*-
+from web.forms import SearchOutput, OutputForm
+from core.insight_api import get_outputs
+
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 
 
@@ -21,12 +26,27 @@ def following_outputs(request):
 def search_output(request):
     search_form = SearchOutput(request.POST or None)
     if search_form.is_valid():
-        return redirect('add_output')
+        txid, network = search_form.process()
+        return add_output(request, txid, network)
 
     return render(request, 
                   'web/outputs/search_output.html', 
                   {'search_form': search_form})
 
 
-def add_output(request):
-    return render(request, 'web/outputs/add_output.html', {})
+def add_output(request, txid=None, network=None):
+    content = get_outputs(txid, network)
+    outputs = {'outputs': content}
+    output_form = OutputForm(request.POST or None, **outputs)
+    if request.method == 'GET':
+        pass
+    else:
+        if output_form.is_valid():
+            pass
+
+    return render(request, 
+                  'web/outputs/add_output.html', 
+                  { 'txid': txid,
+                    'network': network,
+                    'output_form': output_form,
+                    'content': content })

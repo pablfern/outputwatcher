@@ -2,13 +2,21 @@
 {% load static %}
 
 {% block title %}
-    Buscar Outputs
+    Seguir Output
 {% endblock %}
 
 {% block head %}
 {% endblock %}
 
 {% block content %}
-    <div>Buscar Outputs</div>
+    <div>Seguir Outputp</div>
+    <div>{{ txid }} - {{ network }}</div>
+    <div>{{ content }} </div>
+
+    <form action="{% url 'add-output' %}" method="post">
+        {% csrf_token %}
+        {{ output_form }}
+        <button type="submit" class="search-form btn btn-default" id="search">Agregar</button>
+    </form>
 {% endblock %}
 
