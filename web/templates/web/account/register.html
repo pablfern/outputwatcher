@@ -27,22 +27,40 @@
 
 			<form class="contact-form" action="{% url 'register' %}" method="post">
 				{% csrf_token %}
+				{% if register_form.errors %}
+				    {% for error in register_form.non_field_errors %}
+				        <div class="alert alert-danger">
+				            <strong>{{ error|escape }}</strong>
+				        </div>
+				    {% endfor %}
+				{% endif %}
 				<div class="form-group">
+					{% for error in register_form.email.errors %}
+			            <div class="alert alert-danger">
+			                <strong>{{ error|escape }}</strong>
+			            </div>
+			        {% endfor %}
 					<label for="email" class="sr-only">Email</label>
 		        	{{ register_form.email }}
 		        </div>
 		        <div class="form-group">
+					{% for error in register_form.password.errors %}
+			            <div class="alert alert-danger">
+			                <strong>{{ error|escape }}</strong>
+			            </div>
+			        {% endfor %}
 					<label for="password" class="sr-only">Password</label>
 		        	{{ register_form.password }}
 		        </div>
 		       	<div class="form-group">
+		       		{% for error in register_form.repassword.errors %}
+			            <div class="alert alert-danger">
+			                <strong>{{ error|escape }}</strong>
+			            </div>
+			        {% endfor %}
 					<label for="password" class="sr-only">Repeti Contraseña</label>
 		        	{{ register_form.repassword }}
 		        </div>
-        		<div class="form-group">
-					<label for="email" class="sr-only">Email</label>
-					<input type="email" class="form-control" id="email" placeholder="Email">
-				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-md" >Registrate</button>
 				</div>

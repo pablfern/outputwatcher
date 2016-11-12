@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from web.forms import SearchOutput, OutputForm, LoginForm
+from web.forms import SearchOutput, OutputForm, LoginForm, RegisterForm
 from core.models import Transaction, Output, FollowingOutputs
 from core.insight_api import get_outputs, get_output_by_index, OutputAlreadySpentException,\
                              OutputNotFoundException, InsightApiException
@@ -28,7 +28,13 @@ def login(request):
 
 
 def register(request):
-    return render(request, 'web/account/register.html', {})
+    if request.user.is_authenticated():
+        return redirect('following-outputs')
+    register_form = RegisterForm(request.POST or None)
+    if register_form.is_valid():
+        register_form.process(request)
+        return redirect('following-outputs')
+    return render(request, 'web/account/register.html', {'register_form': register_form})
 
 
 @login_required

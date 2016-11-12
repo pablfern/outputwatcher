@@ -86,33 +86,26 @@ class RegisterForm(forms.Form):
     }
 
     email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={
-        'placeholder': 'Correo electrónico', 'class': 'form-control'}))
+        'placeholder': 'Correo electrónico', 'class': 'form-control'}), required=True)
     password = forms.CharField(
         label="Contraseña", widget=forms.PasswordInput(
-            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}))
+            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}), required=True)
     repassword = forms.CharField(
         label="Repeti Contraseña", widget=forms.PasswordInput(
-            attrs={'placeholder': 'Contraseña', 'class': 'form-control'}))
+            attrs={'placeholder': 'Repetir Contraseña', 'class': 'form-control'}), required=True)
 
     def clean(self):
         username = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
         repassword = self.cleaned_data.get('repassword')
-        # if username and password:
-        #     user = auth.authenticate(
-        #         username=username.lower(), password=password
-        #     )
-        #     if not user:
-        #         raise forms.ValidationError(
-        #             self.error_messages['register_invalid'])
-        # return self.cleaned_data
+        if User.objects.filter(email=username).exists():
+            raise forms.ValidationError('Ya existe un usuario registrado con ese email')
 
     def process(self, request):
-        username = self.cleaned_data['email']
+        username = self.cleaned_data['email'].lower()
         password = self.cleaned_data['password']
         repassword = self.cleaned_data.get('repassword')
-#         user = auth.authenticate(username=username.lower(), password=password)
-
-#         auth.login(request, user)
-# #        request.session['user_id'] = user.email
-#         return user
+        User.objects.create_user(username, username, password)
+        user = auth.authenticate(username=username, password=password)
+        auth.login(request, user)
+        return user
