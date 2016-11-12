@@ -27,22 +27,26 @@ def search_output(request):
     search_form = SearchOutput(request.POST or None)
     if search_form.is_valid():
         txid, network = search_form.process()
-        return add_output(request, txid, network)
+        request.session['txid'] = txid
+        request.session['network'] = network
+        return redirect('add-output')
+#        return HttpResponseRedirect(add_output, txid, network)
 
     return render(request, 
                   'web/outputs/search_output.html', 
                   {'search_form': search_form})
 
 
-def add_output(request, txid=None, network=None):
+def add_output(request):
+    txid = request.session['txid']
+    network = request.session['network']
     content = get_outputs(txid, network)
     outputs = {'outputs': content}
-    output_form = OutputForm(request.POST or None, **outputs)
-    if request.method == 'GET':
+    output_form = OutputForm(request.POST or None, 
+                             initial={'transaction': txid, 
+                                      'network': network, }, **outputs)
+    if output_form.is_valid():
         pass
-    else:
-        if output_form.is_valid():
-            pass
 
     return render(request, 
                   'web/outputs/add_output.html', 

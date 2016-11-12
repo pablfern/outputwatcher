@@ -24,4 +24,4 @@ class OutputForm(forms.Form):
         self.fields['transaction'].widget = forms.HiddenInput()
         self.fields['network'].widget = forms.HiddenInput()
         self.fields['output'] = forms.ChoiceField(label='Output', required=True,
-            choices=[(o['n'], o) for o in outputs], widget=forms.RadioSelect)
+            choices=[(o, "Indice: {}, Valor: {} BTCs".format(o['index'], o['value'])) for o in outputs], widget=forms.RadioSelect)

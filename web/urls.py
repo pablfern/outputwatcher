@@ -11,6 +11,4 @@ urlpatterns = patterns(
     # Outputs
     url(r'^search-output$', 'web.views.search_output', name="search-output"),
     url(r'^add-output$', 'web.views.add_output', name="add-output"),
-    url(r'^add-output/(?P<txid>[0-9A-Z-a-z]+)/(?P<network>[a-z]+)$', 
-    	'web.views.add_output', name="add-output"),
 )

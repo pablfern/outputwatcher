@@ -9,14 +9,14 @@
 {% endblock %}
 
 {% block content %}
-    <div>Seguir Outputp</div>
-    <div>{{ txid }} - {{ network }}</div>
-    <div>{{ content }} </div>
+    <h1>Seguir Output</h1>
+    <div>Transacción: {{ txid }}</div>
+    <div>Network: {{ network }}</div>
 
     <form action="{% url 'add-output' %}" method="post">
         {% csrf_token %}
         {{ output_form }}
-        <button type="submit" class="search-form btn btn-default" id="search">Agregar</button>
+        <button type="submit" class="search-form btn btn-default" id="search">Seguir</button>
     </form>
 {% endblock %}
 

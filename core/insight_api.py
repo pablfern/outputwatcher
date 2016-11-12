@@ -19,8 +19,13 @@ def get_outputs(txid, network):
     if resp.status == 200:
         content = json.loads(content)
         if 'vout' in content:
-            aux = []
+            outputs = []
             for out in content['vout']:
-                aux.append(out) if not out['spentTxId'] else None
-            return content['vout']    
+                if not out['spentTxId']:
+                    aux = { 'value': out['value'],
+                            'address': out['scriptPubKey']['addresses'],
+                            'index': out['n'],
+                            }
+                    outputs.append(aux)
+            return outputs    
     return {}
