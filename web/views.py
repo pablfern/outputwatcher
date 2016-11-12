@@ -1,6 +1,5 @@
-from django.shortcuts import render
-
-# Create your views here.
+from web.forms import SearchOutput
+from django.shortcuts import render, redirect
 
 
 def home(request):
@@ -19,5 +18,15 @@ def following_outputs(request):
     return render(request, 'web/following_outputs.html', {})
 
 
+def search_output(request):
+    search_form = SearchOutput(request.POST or None)
+    if search_form.is_valid():
+        return redirect('add_output')
+
+    return render(request, 
+                  'web/outputs/search_output.html', 
+                  {'search_form': search_form})
+
+
 def add_output(request):
-    return render(request, 'web/add_output.html', {})
+    return render(request, 'web/outputs/add_output.html', {})

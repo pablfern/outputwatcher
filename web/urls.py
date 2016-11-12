@@ -7,4 +7,8 @@ urlpatterns = patterns(
     url(r'^$', 'web.views.home', name="home"),
     url(r'^login$', 'web.views.login', name="login"),
     url(r'^register$', 'web.views.register', name="register"),
+
+    # Outputs
+    url(r'^search-output$', 'web.views.search_output', name="search-output"),
+    url(r'^add-output$', 'web.views.add_output', name="add-output"),
 )
