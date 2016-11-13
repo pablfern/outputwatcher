@@ -23,11 +23,24 @@
 					<div id="cnt_form"> 
 						<form class="contact" id="contact-form" action="{% url 'add-output' %}" method="post" name="contact-form">
 							{% csrf_token %}
-							{{ output_form  }}
-<!-- 							<div class="search_widget">
-								{{ search_form.transaction }}
-								<input id="sr_bx" type="text" placeholder="Search...."/>
-							</div>	 -->
+							<!-- {{ output_form  }} -->
+							{% if output_form.errors %}
+							    {% for error in output_form.non_field_errors %}
+							        <div class="alert alert-danger">
+							            <strong>{{ error|escape }}</strong>
+							        </div>
+							    {% endfor %}
+							{% endif %}
+							{% for radio in output_form.output %}
+							<div class="input-group">
+								<span class="input-group-addon beautiful">
+			                        {{ radio.tag }}
+			                    </span>
+							    <label for="{{ radio.id_for_label }}" class="form-control">
+							        {{ radio.choice_label }}
+							    </label>
+							</div>
+							{% endfor %}
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary" id="search">Seguir</button>
 							</div>
