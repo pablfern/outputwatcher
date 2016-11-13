@@ -1,4 +1,4 @@
-<header class="main_menu_sec navbar navbar-default navbar-fixed-top">
+1<header class="main_menu_sec navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-3 col-md-3 col-sm-12">
@@ -25,6 +25,9 @@
 									{% endif %}	
 									{% if user.is_authenticated %}
 										<li class="page-scroll"><a href="{% url 'logout' %}">Cerrar Session</a></li>
+									{% else %}
+										<li class="page-scroll"><a href="{% url 'login' %}">Ingresá</a></li>
+										<li class="page-scroll"><a href="{% url 'register' %}">Registrate</a></li>
 									{% endif %}	
 							</ul>
 								</div>
