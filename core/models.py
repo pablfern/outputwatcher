@@ -8,8 +8,10 @@ class Transaction(models.Model):
     transaction_id = models.CharField(unique=True,
                                       max_length=100, 
                                       verbose_name=u"ID de la transacción")
+    transaction_index = models.PositiveIntegerField(null=True, blank=True, verbose_name=u'BlockChain transaction index')
     network = models.CharField(max_length=20, default='testnet', choices=NETWORKS)
-
+    confirmed_date = models.DateTimeField(null=True, blank=True, verbose_name=u'Fecha de confirmación')
+    
     def __unicode__(self):
         return "{} - {}".format(self.transaction_id, self.network)
 
@@ -22,23 +24,23 @@ class Output(models.Model):
     spent_index = models.PositiveIntegerField(null=True, blank=True, verbose_name=u'Indice de input')
     spent_date = models.DateTimeField(null=True, blank=True, verbose_name=u'Fecha de utilización')
     script = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Script')
-    address = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Dirección') #S criptPubKey['address']    
 
     class Meta:
         unique_together = ('transaction', 'index', )
 
     def __unicode__(self):
-        return "{} - {}".format(self.transaction.transaction_id, 
-                                self.index)
+        return "{} - {} - {}".format(self.transaction.transaction_id, 
+                                self.index,
+                                self.amount)
 
 
 class FollowingOutputs(models.Model):
     STATUS = [('watching', 'siguiendo'), 
-              ('notified', 'notificado'),
+              ('used', 'usado'),
               ('confirmed', 'confirmado')]
     user = models.ForeignKey(User)
     output = models.ForeignKey(Output)
-    creation_date = models.DateTimeField(verbose_name=u'Fecha de creación')
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name=u'Fecha de creación')
     status = models.CharField(max_length=9, default='watching', verbose_name=u'Estado')
     
     class Meta:

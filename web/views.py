@@ -74,7 +74,7 @@ def search_output(request):
                                                       index=index, 
                                                       amount=data['value'],
                                                       script=data['script'])[0]
-                FollowingOutputs.objects.create(user=request.user, output=output, creation_date=datetime.now())
+                FollowingOutputs.objects.create(user=request.user, output=output)
                 return redirect('following-outputs')
             except OutputAlreadySpentException as e:
                 # TODO ADD Alert with messages
@@ -126,7 +126,7 @@ def add_output(request):
                                               index=index, 
                                               amount=amount,
                                               script=script)[0]
-        FollowingOutputs.objects.create(user=request.user, output=output, creation_date=datetime.now())
+        FollowingOutputs.objects.create(user=request.user, output=output)
         request.session.pop('txid', None)
         request.session.pop('network', None)
         return redirect('following-outputs')

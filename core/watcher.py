@@ -8,11 +8,11 @@ import websocket
 import thread
 import time
 from datetime import datetime, timedelta
-from core.tasks import process_tx_update
+from core.tasks import process_request
 
 
 def on_message(ws, message):
-    process_tx_update.delay(message)
+    process_request.delay(message)
     print message
 
 def on_error(ws, error):
@@ -25,6 +25,7 @@ def on_open(ws):
     def run(*args):
         next_ping = datetime.now() + timedelta(seconds=25)
         ws.send(json.dumps({"op":"unconfirmed_sub"}))
+        ws.send(json.dumps({"op":"blocks_sub"}))
         while True:
             if datetime.now()>next_ping:
                 ws.send(json.dumps({"op": "ping"}))
