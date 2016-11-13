@@ -38,13 +38,13 @@ def process_tx_update(json_data):
         for _input in json_data['x']['inputs']:
             scripts.append(_input['prev_out']['script'])
         
-        if FollowingOutputs.objects.filter(status='watching',
+        if FollowingOutputs.objects.filter(status__in=['watching', 'used'],
                                            output__script__in=scripts).exists():
             # TODO: We are only using livenet. Testnet should be added
             tx = Transaction.objects.get_or_create(transaction_id=json_data['x']['hash'], 
                                                    network='livenet')[0]
             spent_date = datetime.fromtimestamp(json_data['x']['time'])
-            for follow in FollowingOutputs.objects.filter(status='watching',
+            for follow in FollowingOutputs.objects.filter(status__in=['watching', 'used'],
                                                           output__script__in=scripts):
                 follow.output.spent_transaction = tx
                 follow.output.spent_date = spent_date

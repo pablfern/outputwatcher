@@ -69,7 +69,9 @@ def search_output(request):
         if index:
             try:
                 data = get_output_by_index(txid, index, network)
-                transaction = Transaction.objects.get_or_create(transaction_id=txid, network=network)[0]
+                transaction = Transaction.objects.get_or_create(transaction_id=txid, 
+                                                                network=network,
+                                                                transaction_index=data['tx_index'])[0]
                 output = Output.objects.get_or_create(transaction=transaction, 
                                                       index=index, 
                                                       amount=data['value'],
@@ -120,8 +122,10 @@ def add_output(request):
                              initial={'transaction': txid, 
                                       'network': network, }, **outputs)
     if output_form.is_valid():
-        index, amount, script = output_form.process()
-        transaction = Transaction.objects.get_or_create(transaction_id=txid, network=network)[0]
+        index, amount, script, tx_index = output_form.process()
+        transaction = Transaction.objects.get_or_create(transaction_id=txid, 
+                                                        network=network, 
+                                                        transaction_index=tx_index)[0]
         output = Output.objects.get_or_create(transaction=transaction, 
                                               index=index, 
                                               amount=amount,
