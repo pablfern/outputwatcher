@@ -20,10 +20,12 @@
 					</div>			
 				</div>		
 				<div class="col-md-6 col-md-offset-3 text-center"> 
-					<div id="cnt_form"> 
+					<div id="cnt_form">
+						{% if output_form.output %}
 						<form class="contact" id="contact-form" action="{% url 'add-output' %}" method="post" name="contact-form">
 							{% csrf_token %}
-							<!-- {{ output_form  }} -->
+							{{ output_form.transaction  }}
+							{{ output_form.network  }}
 							{% if output_form.errors %}
 							    {% for error in output_form.non_field_errors %}
 							        <div class="alert alert-danger">
@@ -44,7 +46,15 @@
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary" id="search">Seguir</button>
 							</div>
-						</form> 
+						</form>
+						{% else %}
+							<div class="input-group">
+								<span class="input-group-addon beautiful">
+								No hay outputs sin gastar en la transacción indicada.
+								</span>
+							</div>
+							<a href="{% url 'search-output' %}" class="btn btn-primary btn-lg download" >Buscar de nuevo</a>
+						{% endif %} 
 					</div>
 				</div>		
 			</div>

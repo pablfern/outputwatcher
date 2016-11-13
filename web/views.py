@@ -66,7 +66,7 @@ def search_output(request):
 
     if search_form.is_valid():
         txid, network, index = search_form.process()
-        if index:
+        if not index == None:
             try:
                 data = get_output_by_index(txid, index, network)
                 transaction = Transaction.objects.get_or_create(transaction_id=txid, 
@@ -77,18 +77,15 @@ def search_output(request):
                                                       amount=data['value'],
                                                       script=data['script'])[0]
                 FollowingOutputs.objects.create(user=request.user, output=output)
-                return redirect('following-outputs')
+                return redirect(reverse('following-outputs')+ '?success=El output fue agregado a tu lista de seguimiento')
             except OutputAlreadySpentException as e:
-                # TODO ADD Alert with messages
-                return redirect('search-output')
+                return redirect(reverse('search-output')+ '?msg=El output indicado ya fue gastado')
             except OutputNotFoundException as e:
-                # TODO ADD Alert with messages
-                return redirect('search-output')
+                return redirect(reverse('search-output')+ '?msg=No se encontraron resultados')
             except InsightApiException as e:
-                # TODO ADD Alert with messages
-                return redirect('search-output')
+                return redirect(reverse('search-output')+ '?msg=Ocurrió un error en el servidor')
             except IntegrityError as e:
-                return redirect('following-outputs')
+                return redirect(reverse('following-outputs') + '?msg=Ya estas siguiendo el output indicado')
 
         request.session['txid'] = txid
         request.session['network'] = network
@@ -106,16 +103,13 @@ def add_output(request):
     try:
         content = get_outputs(txid, network)
     except OutputAlreadySpentException as e:
-        # TODO ADD Alert with messages
-        return redirect('search-output')
+        return redirect(reverse('search-output')+ '?msg=El output indicado ya fue gastado')
     except OutputNotFoundException as e:
-        # TODO ADD Alert with messages
-        return redirect('search-output')
+        return redirect(reverse('search-output')+ '?msg=No se encontraron resultados')
     except InsightApiException as e:
-        # TODO ADD Alert with messages
-        return redirect('search-output')
+        return redirect(reverse('search-output')+ '?msg=Ocurrió un error en el servidor')
     except IntegrityError as e:
-        return redirect('following-outputs')
+        return redirect(reverse('following-outputs') + '?msg=Ya estas siguiendo el output indicado')
 
     outputs = {'outputs': content}
     output_form = OutputForm(request.POST or None, 
@@ -130,10 +124,14 @@ def add_output(request):
                                               index=index, 
                                               amount=amount,
                                               script=script)[0]
-        FollowingOutputs.objects.create(user=request.user, output=output)
+        try:
+            FollowingOutputs.objects.create(user=request.user, output=output)
+        except IntegrityError as e:
+            return redirect(reverse('following-outputs') + '?msg=Ya estas siguiendo el output indicado')
+    
         request.session.pop('txid', None)
         request.session.pop('network', None)
-        return redirect('following-outputs')
+        return redirect(reverse('following-outputs')+ '?success=El output fue agregado a tu lista de seguimiento')
 
     return render(request, 
                   'web/outputs/add_output.html', 

@@ -23,8 +23,13 @@
 							</div>	
 						</div>	
 					</div>	
-				</div>		
-				<div class="col-md-6 col-md-offset-3 text-center"> 
+				</div>
+				<div class="col-md-6 col-md-offset-3 text-center">
+					{% if request.GET.msg %} 
+						<div class="alert alert-danger">
+		  					{{request.GET.msg}}
+						</div>
+					{% endif %}
 					<div id="cnt_form"> 
 						<form class="contact" id="contact-form" action="{% url 'search-output' %}" method="post" name="contact-form">
 							{% csrf_token %}
