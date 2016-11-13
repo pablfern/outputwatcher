@@ -648,6 +648,21 @@ border : #00AFF0 solid 5px;transition: all 1s ease 0s;
 -moz-transition: all 1s ease 0s;
 -webkit-transition: all 1s ease 0s
 }
+#noConfirmationView:hover{
+	border : #dcce2c solid 5px;transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-webkit-transition: all 1s ease 0s
+}
+#noConfirmation:hover{
+	border : #E41507 solid 5px;transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-webkit-transition: all 1s ease 0s
+}
+#spent_confirmed:hover{
+	border : #3c763d solid 5px;transition: all 1s ease 0s;
+	-moz-transition: all 1s ease 0s;
+	-webkit-transition: all 1s ease 0s
+}
 .sngl_pricing:hover.sngl_pricing h3 {
 background : none 0 0 repeat scroll #00AFF0;transition: all 1s ease 0s;
 -moz-transition: all 1s ease 0s;
@@ -700,6 +715,27 @@ border : #666666 solid 1px;
 color : #fff;
 text-transform : uppercase;
 padding : 10px 30px;
+}
+.btn.view_btn{
+	background : none 0 0 repeat scroll #dcce2c;
+	border : #666666 solid 1px;
+	color : #fff;
+	text-transform : uppercase;
+	padding : 10px 30px;
+}
+.btn.confirmed_btn{
+	background : none 0 0 repeat scroll #3c763d;
+	border : #666666 solid 1px;
+	color : #fff;
+	text-transform : uppercase;
+	padding : 10px 30px;
+}
+.btn.noconfirmed_btn{
+	background : none 0 0 repeat scroll #E41507;
+	border : #666666 solid 1px;
+	color : #fff;
+	text-transform : uppercase;
+	padding : 10px 30px;
 }
 .sngl_pricing ul {
 margin : 0;
@@ -1001,3 +1037,16 @@ width : 731px !important ;
 #search_section{
 	padding-top: 120px;
 }
+
+#column2 h5{ 
+	font-size: 12px;
+}
+
+#column2 p{ 
+	font-size: 12px;
+}
+
+#column2 .btn.pricing_btn{
+	padding: 10px 10px;
+}
+
