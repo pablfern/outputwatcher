@@ -50,8 +50,14 @@ def logout(request):
 def following_outputs(request):
     request.session.pop('txid', None)
     request.session.pop('network', None)
-    following_outputs = FollowingOutputs.objects.filter(user=request.user).order_by('-creation_date')
-    return render(request, 'web/outputs/following_outputs.html', {'following_outputs': following_outputs,})
+    following = FollowingOutputs.objects.filter(user=request.user, status='watching').order_by('-creation_date')
+    following_spent = FollowingOutputs.objects.filter(user=request.user, status='notified').order_by('-creation_date')
+    following_spent_confirmed = FollowingOutputs.objects.filter(user=request.user, status='confirmed').order_by('-creation_date')
+    return render(request, 
+                  'web/outputs/following_outputs.html', 
+                  {'following': following,
+                   'following_spent': following_spent,
+                   'following_spent_confirmed': following_spent_confirmed,})
 
 
 @login_required
@@ -138,6 +144,17 @@ def cancel_output(request, following_id):
     try:
         following = FollowingOutputs.objects.get(user=request.user, id=following_id)
         following.delete()
+        return redirect('following-outputs')
+    except Exception:
+        raise Http404
+
+
+@login_required
+def confirm_output(request, following_id):
+    try:
+        following = FollowingOutputs.objects.get(user=request.user, id=following_id)
+        following.status = 'confirmed'
+        following.save()
         return redirect('following-outputs')
     except Exception:
         raise Http404
