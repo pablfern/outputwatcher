@@ -30,7 +30,7 @@
 								<p>Siguiendo desde: {{ following.creation_date }}</p>
 							</div>
 							<div class="col-lg-2 col-md-2 col-sm-2 col-md-offset-1">
-								<a href="" class="btn pricing_btn">Dejar de seguir</a>
+								<a href="{% url 'cancel-output' following_id=following.id %}" class="btn pricing_btn">Dejar de seguir</a>
 							</div>
 						</div>
 					</div>

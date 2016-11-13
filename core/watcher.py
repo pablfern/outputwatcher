@@ -26,7 +26,6 @@ def on_open(ws):
         next_ping = datetime.now() + timedelta(seconds=25)
         ws.send(json.dumps({"op":"unconfirmed_sub"}))
         while True:
-            time.sleep(1)
             if datetime.now()>next_ping:
                 ws.send(json.dumps({"op": "ping"}))
                 next_ping = datetime.now() + timedelta(seconds=25)

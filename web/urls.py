@@ -13,5 +13,5 @@ urlpatterns = patterns(
     url(r'^search-output/$', 'web.views.search_output', name="search-output"),
     url(r'^add-output/$', 'web.views.add_output', name="add-output"),
     url(r'^following-outputs/$', 'web.views.following_outputs', name="following-outputs"),
-    
+	url(r'^cancel-outputs/(?P<following_id>[0-9]+)/$', 'web.views.cancel_output', name="cancel-output")    
 )

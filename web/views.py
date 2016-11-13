@@ -4,13 +4,14 @@ from web.forms import SearchOutput, OutputForm, LoginForm, RegisterForm
 from core.models import Transaction, Output, FollowingOutputs
 from core.insight_api import get_outputs, get_output_by_index, OutputAlreadySpentException,\
                              OutputNotFoundException, InsightApiException
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
+
 
 def home(request):
     if request.user.is_authenticated():
@@ -130,3 +131,13 @@ def add_output(request):
                     'network': network,
                     'output_form': output_form,
                     'content': content })
+
+
+@login_required
+def cancel_output(request, following_id):
+    try:
+        following = FollowingOutputs.objects.get(user=request.user, id=following_id)
+        following.delete()
+        return redirect('following-outputs')
+    except Exception:
+        raise Http404
