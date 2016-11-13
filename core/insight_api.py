@@ -37,6 +37,7 @@ def get_outputs(txid, network):
                     aux = { 'value': out['value'],
                             #'address': out['scriptPubKey']['addresses'],
                             'index': out['n'],
+                            'script': out['scriptPubKey']['hex'],
                             }
                     outputs.append(aux)
             return outputs
@@ -54,6 +55,7 @@ def get_output_by_index(txid, index, network):
                 if out['n'] == index:
                     if not out['spentTxId']:
                         return {'value': out['value'],
+                                'script': out['scriptPubKey']['hex'],
                                 'index': index}
                     else:
                         raise OutputAlreadySpentException()

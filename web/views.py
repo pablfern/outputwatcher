@@ -63,7 +63,10 @@ def search_output(request):
             try:
                 data = get_output_by_index(txid, index, network)
                 transaction = Transaction.objects.get_or_create(transaction_id=txid, network=network)[0]
-                output = Output.objects.get_or_create(transaction=transaction, index=index, amount=data['value'])[0]
+                output = Output.objects.get_or_create(transaction=transaction, 
+                                                      index=index, 
+                                                      amount=data['value'],
+                                                      script=data['script'])[0]
                 FollowingOutputs.objects.create(user=request.user, output=output, creation_date=datetime.now())
                 return redirect('following-outputs')
             except OutputAlreadySpentException as e:
@@ -110,9 +113,12 @@ def add_output(request):
                              initial={'transaction': txid, 
                                       'network': network, }, **outputs)
     if output_form.is_valid():
-        index, amount = output_form.process()
+        index, amount, script = output_form.process()
         transaction = Transaction.objects.get_or_create(transaction_id=txid, network=network)[0]
-        output = Output.objects.get_or_create(transaction=transaction, index=index, amount=amount)[0]
+        output = Output.objects.get_or_create(transaction=transaction, 
+                                              index=index, 
+                                              amount=amount,
+                                              script=script)[0]
         FollowingOutputs.objects.create(user=request.user, output=output, creation_date=datetime.now())
         request.session.pop('txid', None)
         request.session.pop('network', None)

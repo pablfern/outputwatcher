@@ -13,6 +13,7 @@ class Transaction(models.Model):
     def __unicode__(self):
         return "{} - {}".format(self.transaction_id, self.network)
 
+
 class Output(models.Model):
     transaction = models.ForeignKey(Transaction, related_name='transaction_output', verbose_name=u'Transacción')
     index = models.PositiveIntegerField(verbose_name=u'Indice del output')
@@ -20,16 +21,20 @@ class Output(models.Model):
     spent_transaction = models.ForeignKey(Transaction, null=True, blank=True, related_name='transaction_input', verbose_name=u'Transacción de input')
     spent_index = models.PositiveIntegerField(null=True, blank=True, verbose_name=u'Indice de input')
     spent_date = models.DateTimeField(null=True, blank=True, verbose_name=u'Fecha de utilización')
-    address = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Dirección') #S criptPubKey['address']
-    
+    script = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Script')
+    address = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Dirección') #S criptPubKey['address']    
     class Meta:
         unique_together = ('transaction', 'index', )
 
 
 class FollowingOutputs(models.Model):
+    STATUS = [('watching', 'siguiendo'), 
+              ('notified', 'notificado'),
+              ('confirmed', 'confirmado')]
     user = models.ForeignKey(User)
     output = models.ForeignKey(Output)
     creation_date = models.DateTimeField(verbose_name=u'Fecha de creación')
-
+    status = models.CharField(max_length=9, default='watching', verbose_name=u'Estado')
+    
     class Meta:
         unique_together = ('user', 'output', )
