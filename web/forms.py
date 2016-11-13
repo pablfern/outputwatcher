@@ -7,11 +7,13 @@ from django.contrib.auth.models import User
 
 
 class SearchOutput(forms.Form):
-    NETWORK = [('livenet', 'livenet'), ('testnet', 'testnet')]
-    transaction = forms.CharField(label=u'ID de la transacción', max_length=100, required=True)
-    network = forms.ChoiceField(label='Network', required=True, widget=forms.RadioSelect,
-                                        choices=NETWORK)
-    index = forms.IntegerField(label=u'Indice', required=False)
+    # NETWORK = [('livenet', 'livenet'), ('testnet', 'testnet')]
+    transaction = forms.CharField(label=u'ID de la transacción', widget=forms.TextInput(attrs={
+        'placeholder': 'Id de transacción', 'id': 'sr_bx'}), max_length=100, required=True)
+    # network = forms.ChoiceField(label='Network', required=True, widget=forms.RadioSelect,
+    #                                     choices=NETWORK)
+    index = forms.IntegerField(label=u'Indice', widget=forms.TextInput(attrs={
+        'placeholder': 'Indice output', 'id': 'sr_bx'}),required=False)
 
     def clean_index(self):
         _index = self.cleaned_data['index']
@@ -22,7 +24,8 @@ class SearchOutput(forms.Form):
     def process(self):
         index = self.cleaned_data['index']
         transaction = self.cleaned_data['transaction']
-        network = self.cleaned_data['network']
+        # network = self.cleaned_data['network']
+        network = 'livenet'
         return transaction, network, index
 
 
