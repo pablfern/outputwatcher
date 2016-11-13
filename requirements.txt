@@ -4,3 +4,4 @@ psycopg2==2.5
 httplib2==0.9.2
 ipython==3.2.1
 django-extensions==1.5.7
+websocket-client==0.37.0
