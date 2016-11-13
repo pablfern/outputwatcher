@@ -3,6 +3,8 @@ import json
 from celery import Celery
 from datetime import datetime
 from core.models import Output, Transaction, FollowingOutputs
+from core.emails import output_in_tx_email
+
 
 app = Celery('tasks', broker='pyamqp://guest@localhost//')
 
@@ -23,17 +25,21 @@ def process_tx_update(data):
             for follow in FollowingOutputs.objects.filter(status='watching',
                                                           output__script__in=scripts):
                 follow.output.spent_transaction = tx
+                follow.output.spent_date = spent_date
                 follow.output.save()
                 follow.status = 'notified'
                 follow.save()
-                send_email(follow.id)
+                send_email.delay(follow.id)
                 print 'Following output updated ' + follow.id
         else:
             print 'Discarding tx notification...'
 
+
 @app.task()
-def send_email():
-    pass
+def send_email(follow_id):
+    follow = FollowingOutputs.objects.get(id=follow_id)
+    # TODO: Put output data here
+    output_in_tx_email("OUTPUT?", follow.output.index, follow.output.spent_transaction.transaction_id, [follow.user.email])
 
 
 @app.task()
