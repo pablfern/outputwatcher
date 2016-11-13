@@ -23,8 +23,13 @@ class Output(models.Model):
     spent_date = models.DateTimeField(null=True, blank=True, verbose_name=u'Fecha de utilización')
     script = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Script')
     address = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'Dirección') #S criptPubKey['address']    
+
     class Meta:
         unique_together = ('transaction', 'index', )
+
+    def __unicode__(self):
+        return "{} - {}".format(self.transaction.transaction_id, 
+                                self.index)
 
 
 class FollowingOutputs(models.Model):
@@ -38,3 +43,6 @@ class FollowingOutputs(models.Model):
     
     class Meta:
         unique_together = ('user', 'output', )
+
+    def __unicode__(self):
+        return "{} - {} - {}".format(self.status, self.user.email, self.output)

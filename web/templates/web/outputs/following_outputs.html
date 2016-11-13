@@ -80,7 +80,7 @@
 							<h1>Outputs ya utilizados</h1>
 						</div>			
 					</div>		
-					{% for following in following_spent_confiemd %}
+					{% for following in following_spent_confirmed %}
 					<div class="col-lg-10 col-md-10 col-sm-10 col-md-offset-1 ">
 						<div class="sngl_pricing">											
 							<h5>{{ following.output.transaction }} - [{{ following.output.index}}]</h5>
@@ -93,7 +93,7 @@
 									<p>Siguiendo desde: {{ following.creation_date }}</p>
 								</div>
 								<div class="col-lg-2 col-md-2 col-sm-2 col-md-offset-1">
-									<a href="{% url 'confirm-output' following_id=following.id %}" class="btn pricing_btn">Cerrar</a>
+									<a href="{% url 'cancel-output' following_id=following.id %}" class="btn pricing_btn">Borrar</a>
 								</div>
 							</div>
 						</div>

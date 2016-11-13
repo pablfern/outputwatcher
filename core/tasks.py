@@ -9,18 +9,18 @@ app = Celery('tasks', broker='pyamqp://guest@localhost//')
 @app.task()
 def process_tx_update(data):
     json_data = json.loads(data)
-    if json_data['op'] == "utx":
+    if 'op' in json_data and json_data['op'] == "utx" and 'x' in json_data:
         scripts = []
         for _input in json_data['x']['inputs']:
-            scripts.append(_input['script'])
+            scripts.append(_input['prev_out']['script'])
         
-        if FollowingOutputs.objects.filter(status='following',
+        if FollowingOutputs.objects.filter(status='watching',
                                            output__script__in=scripts).exists():
             # TODO: We are only using livenet. Testnet should be added
-            tx = Transaction.objects.get_or_create(transaction_id=json_data['hash'], 
-                                                   network='livenet')
-            spent_date = datetime.fromtimestamp(json_data['time'])
-            for follow in FollowingOutputs.objects.filter(status='following',
+            tx = Transaction.objects.get_or_create(transaction_id=json_data['x']['hash'], 
+                                                   network='livenet')[0]
+            spent_date = datetime.fromtimestamp(json_data['x']['time'])
+            for follow in FollowingOutputs.objects.filter(status='watching',
                                                           output__script__in=scripts):
                 follow.output.spent_transaction = tx
                 follow.output.save()
