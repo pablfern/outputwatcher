@@ -187,7 +187,7 @@ margin-top : 19px;
 width : 76px;
 }
 #pricing_sec {
-padding : 70px 0;
+padding : 120px 0;
 }
 .title_sec {
 margin : 0 auto;
@@ -706,7 +706,7 @@ margin : 0;
 padding : 55px 0;
 }
 .sngl_pricing a {
-margin-top : 30px;
+margin-bottom: 10px;
 }
 #clt_sec {
 background : #F0F0F0;
@@ -996,4 +996,8 @@ width : 731px !important ;
     margin-right: 5px;
   margin-top: 5px;
   font-size: 18px;
+}
+
+#search_section{
+	padding-top: 120px;
 }

@@ -18,13 +18,16 @@
 				<div class="rgt_hd">					
 					<div class="main_menu">
 						<nav id="nav_menu">
-							{% if user.is_authenticated %}
-								<div id="navbar">
+							<div id="navbar">
 									<ul>
+									{% if 'following-outputs' in request.path %}
+										<li class="page-scroll"><a href="{% url 'search-output' %}">Buscar outputs</a></li>
+									{% endif %}	
+									{% if user.is_authenticated %}
 										<li class="page-scroll"><a href="{% url 'logout' %}">Cerrar Session</a></li>
-									</ul>
+									{% endif %}	
+							</ul>
 								</div>
-							{% endif %}	
 						</nav>			
 					</div>							
 				</div>
