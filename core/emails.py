@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 
 
 def output_in_tx_email(out_transaction, in_transaction, index, to_emails, **kwargs):
-    body = "El output " + str(index) + u" de la transacción " + out_transaction.transaccion_id + u"fue gastado en la transacción " + in_transaction.transaction_id
+    body = "El output " + str(index) + u" de la transacción " + out_transaction + u"fue gastado en la transacción " + in_transaction
     email = EmailMessage("Uno de los outputs que estabas siguiendo fue utilizado", body,
                          settings.EMAIL_HOST_USER,
                          to_emails, **kwargs)

@@ -51,8 +51,8 @@ def following_outputs(request):
     request.session.pop('txid', None)
     request.session.pop('network', None)
     following = FollowingOutputs.objects.filter(user=request.user, status='watching').order_by('-creation_date')
-    following_spent = FollowingOutputs.objects.filter(user=request.user, status='notified').order_by('-creation_date')
-    following_spent_confirmed = FollowingOutputs.objects.filter(user=request.user, status='confirmed').order_by('-creation_date')
+    following_spent = FollowingOutputs.objects.filter(user=request.user, status='used', user_status='pending').order_by('-creation_date')
+    following_spent_confirmed = FollowingOutputs.objects.exclude(status='watching').filter(user=request.user, user_status='confirmed').order_by('-creation_date')
     return render(request, 
                   'web/outputs/following_outputs.html', 
                   {'following': following,
@@ -155,7 +155,7 @@ def cancel_output(request, following_id):
 def confirm_output(request, following_id):
     try:
         following = FollowingOutputs.objects.get(user=request.user, id=following_id)
-        following.status = 'confirmed'
+        following.user_status = 'confirmed'
         following.save()
         return redirect('following-outputs')
     except Exception:
