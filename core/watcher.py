@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # https://github.com/liris/websocket-client
 # https://blockchain.info/es/api/api_websocket
-# En teoria el Script de Input que te da BlockChain es igual al Hex
-# del output en Insight. De esta manera deberíamos poder matchearlos
 import json
 import websocket
 import thread

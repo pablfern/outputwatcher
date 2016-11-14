@@ -21,6 +21,7 @@ def process_request(data):
 
 @app.task()
 def process_block(json_data):
+    print 'Block notification received!'
     confirmed_date = datetime.fromtimestamp(json_data['x']['time'])
     for tx in Transaction.objects.filter(transaction_index__in=json_data['x']['txIndexes']):
         tx.confirmed_date = confirmed_date
@@ -54,22 +55,18 @@ def process_tx_update(json_data):
                 follow.save()
                 send_output_in_tx_email.delay(follow.id)
                 print 'Following output updated ' + follow.id
-        else:
-            print 'Discarding tx notification...'
 
 
 @app.task()
 def send_output_in_tx_email(follow_id):
     follow = FollowingOutputs.objects.get(id=follow_id)
-    # TODO: Put output data here
-    output_in_tx_email("OUTPUT?", follow.output.index, follow.output.spent_transaction.transaction_id, [follow.user.email])
+    output_in_tx_email(follow.output.script, follow.output.index, follow.output.spent_transaction.transaction_id, [follow.user.email])
 
 
 @app.task()
 def send_output_in_confirmed_tx_email(follow_id):
     follow = FollowingOutputs.objects.get(id=follow_id)
-    # TODO: Put output data here
-    output_in_confirmed_tx_email("OUTPUT?", follow.output.index, follow.output.spent_transaction.transaction_id, [follow.user.email])
+    output_in_confirmed_tx_email(follow.output.script, follow.output.index, follow.output.spent_transaction.transaction_id, [follow.user.email])
 
 
 @app.task()
