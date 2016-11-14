@@ -3,8 +3,8 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 
 
-def output_in_tx_email(output, index, transaction, to_emails, **kwargs):
-    body = "El output " + output + u" con índice " + index + u" fue utilizado en la transacción " + transaction + "."
+def output_in_tx_email(out_transaction, in_transaction, index, to_emails, **kwargs):
+    body = "El output " + str(index) + u" de la transacción " + out_transaction.transaccion_id + u"fue gastado en la transacción " + in_transaction.transaction_id
     email = EmailMessage("Uno de los outputs que estabas siguiendo fue utilizado", body,
                          settings.EMAIL_HOST_USER,
                          to_emails, **kwargs)
@@ -13,7 +13,7 @@ def output_in_tx_email(output, index, transaction, to_emails, **kwargs):
 
 
 def output_in_confirmed_tx_email(output, index, transaction, to_emails, **kwargs):
-    body = u"La transacción " + transaction + u" que seguías con el Output con índice" + index + "fue confirmada en el nuevo bloque de la cadena." 
+    body = u"La transacción " + transaction + u" que seguías con el Output con índice" + str(index) + "fue confirmada en el nuevo bloque de la cadena." 
     email = EmailMessage("La transaccion de uno de los outputs que estabas siguiendo fue confirmada", body,
                          settings.EMAIL_HOST_USER,
                          to_emails, **kwargs)
