@@ -83,7 +83,7 @@ def search_output(request):
             except OutputNotFoundException as e:
                 return redirect(reverse('search-output')+ '?msg=No se encontraron resultados')
             except InsightApiException as e:
-                return redirect(reverse('search-output')+ '?msg=Ocurrió un error en el servidor')
+                return redirect(reverse('search-output')+ '?msg=Ocurrio un error en el servidor')
             except IntegrityError as e:
                 return redirect(reverse('following-outputs') + '?msg=Ya estas siguiendo el output indicado')
 
@@ -107,7 +107,7 @@ def add_output(request):
     except OutputNotFoundException as e:
         return redirect(reverse('search-output')+ '?msg=No se encontraron resultados')
     except InsightApiException as e:
-        return redirect(reverse('search-output')+ '?msg=Ocurrió un error en el servidor')
+        return redirect(reverse('search-output')+ '?msg=Ocurrio un error en el servidor')
     except IntegrityError as e:
         return redirect(reverse('following-outputs') + '?msg=Ya estas siguiendo el output indicado')
 
